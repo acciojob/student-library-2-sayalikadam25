@@ -67,7 +67,7 @@ public class TransactionService {
         Transaction transaction=new Transaction();
         transaction.setBook(book);
         transaction.setCard(card);
-        transaction.setTransactionDate(LocalDate.now());
+        transaction.setTransactionDate(new Date());
         transaction.setTransactionStatus(TransactionStatus.SUCCESSFUL);
         transactionRepository5.save(transaction);
 
@@ -81,9 +81,10 @@ public class TransactionService {
         //make a new transaction for return book which contains the fine amount as well
         List<Transaction> transactions = transactionRepository5.find(cardId, bookId, TransactionStatus.SUCCESSFUL, true);
         Transaction transaction = transactions.get(transactions.size() - 1);
-        LocalDate transDate= transaction.getTransactionDate();
+        Date transDate= transaction.getTransactionDate();
+        LocalDate transactionDate=new java.sql.Date(transDate.getTime()).toLocalDate();
         LocalDate returnDate= LocalDate.now();
-        Period period = Period.between(returnDate,transDate);
+        Period period = Period.between(returnDate,transactionDate);
         int days= period.getDays();
 
         int fine=0;
@@ -91,6 +92,7 @@ public class TransactionService {
             fine=(days-getMax_allowed_days)*fine_per_day;
         Transaction returnBookTransaction  = new Transaction();
         returnBookTransaction.setFineAmount(fine);
+        returnBookTransaction.setTransactionDate(new Date());
         Book book=bookRepository5.findById(bookId).get();
         Card card=cardRepository5.findById(cardId).get();
         List<Book> books=card.getBooks();

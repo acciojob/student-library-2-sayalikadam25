@@ -39,6 +39,6 @@ public class Transaction {
     private TransactionStatus transactionStatus;
 
     @CreationTimestamp
-    private LocalDate transactionDate;
+    private Date transactionDate;
 }
 

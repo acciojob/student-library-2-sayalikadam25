@@ -9,7 +9,6 @@ import java.util.List;
 
 @Entity
 @Table(name="Author")
-@AllArgsConstructor
 @Data
 public class Author {
 
@@ -31,5 +30,13 @@ public class Author {
     public Author() {
     }
 
+    public Author(int id, String name, String email, int age, String country, List<Book> booksWritten) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.age = age;
+        this.country = country;
+        this.booksWritten = booksWritten;
+    }
 }
 
