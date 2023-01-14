@@ -1,11 +1,16 @@
 package com.driver.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name="Author")
+@AllArgsConstructor
+@Data
 public class Author {
 
     @Id
