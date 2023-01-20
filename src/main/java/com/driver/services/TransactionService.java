@@ -55,21 +55,17 @@ public class TransactionService {
         if(!bookRepository5.existsById(bookId))
             throw new Exception("Book is either unavailable or not present");
         Book book=bookRepository5.findById(bookId).get();
-        if(!book.isAvailable())
+        if(issueBookWhenBookNotaAvailable(book))
             throw new Exception("Book is either unavailable or not present");
         List<Book> books=card.getBooks();
-        if(books.size()>=max_allowed_books)
+        if(issueBookWhenCardLimitExceeds(card,books))
             throw new Exception("Book limit has reached for this card");
         books.add(book);
         card.setBooks(books);
         book.setAvailable(false);
         cardRepository5.save(card);
-        Transaction transaction=new Transaction();
-        transaction.setBook(book);
-        transaction.setCard(card);
-        transaction.setTransactionDate(new Date());
-        transaction.setTransactionStatus(TransactionStatus.SUCCESSFUL);
-        transactionRepository5.save(transaction);
+        Transaction transaction=issueBookWhenTransactionSuccessful(book,card);
+
 
        return transaction.getTransactionId(); //return transactionId instead
     }
@@ -100,5 +96,24 @@ public class TransactionService {
         card.setBooks(books);
         book.setAvailable(true);
         return returnBookTransaction; //return the transaction after updating all details
+    }
+    public boolean issueBookWhenBookNotaAvailable(Book book){
+        if(!book.isAvailable())
+            return true;
+        return false;
+    }
+    public boolean issueBookWhenCardLimitExceeds(Card card,List<Book> books){
+        if(books.size()>=max_allowed_books)
+            return true;
+        return false;
+    }
+    public Transaction issueBookWhenTransactionSuccessful(Book book,Card card){
+        Transaction transaction=new Transaction();
+        transaction.setBook(book);
+        transaction.setCard(card);
+        transaction.setTransactionDate(new Date());
+        transaction.setTransactionStatus(TransactionStatus.SUCCESSFUL);
+        transactionRepository5.save(transaction);
+        return transaction;
     }
 }

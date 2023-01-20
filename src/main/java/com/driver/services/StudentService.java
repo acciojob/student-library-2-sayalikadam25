@@ -23,16 +23,17 @@ public class StudentService {
     }
 
     public Student getDetailsById(int id){
-        Student student = null;
-
+        Student student = studentRepository4.findById(id).get();
         return student;
     }
 
     public void createStudent(Student student){
+
         studentRepository4.save(student);
     }
 
     public void updateStudent(Student student){
+
         studentRepository4.save(student);
     }
 
