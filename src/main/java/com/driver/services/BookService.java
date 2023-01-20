@@ -2,6 +2,8 @@ package com.driver.services;
 
 import com.driver.models.Book;
 import com.driver.repositories.BookRepository;
+import org.apache.tomcat.util.buf.StringUtils;
+import org.mockito.internal.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +21,13 @@ public class BookService {
     public List<Book> getBooks(String genre, boolean available, String author){
         List<Book> books;
 
-        if(genre!=null && author!=null){
+        if(!genre.isEmpty() && !author.isEmpty()){
             books=getBooksWhenNoInputNull(genre,available,author);
         }
-        else if(author==null && genre!=null){
+        else if(author.isEmpty() && !genre.isEmpty()){
             books=getBooksWhenAuthorNull(genre,available);
         }
-        else if(genre==null && author!=null){
+        else if(genre.isEmpty() && !author.isEmpty()){
             books=getBooksWhenGenreNull(author,available);
         }
         else{

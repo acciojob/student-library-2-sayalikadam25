@@ -63,8 +63,13 @@ public class TransactionService {
         books.add(book);
         card.setBooks(books);
         book.setAvailable(false);
+
         cardRepository5.save(card);
         Transaction transaction=issueBookWhenTransactionSuccessful(book,card);
+        List<Transaction> transactionList=book.getTransactions();
+        transactionList.add(transaction);
+        book.setTransactions(transactionList);
+        bookRepository5.save(book);
 
 
        return transaction.getTransactionId(); //return transactionId instead
@@ -95,6 +100,12 @@ public class TransactionService {
         books.remove(book);
         card.setBooks(books);
         book.setAvailable(true);
+        List<Transaction> trans=book.getTransactions();
+        trans.add(returnBookTransaction);
+        book.setTransactions(trans);
+        bookRepository5.save(book);
+        transactionRepository5.save(returnBookTransaction);
+        cardRepository5.save(card);
         return returnBookTransaction; //return the transaction after updating all details
     }
     public boolean issueBookWhenBookNotaAvailable(Book book){

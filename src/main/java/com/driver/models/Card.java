@@ -2,6 +2,7 @@ package com.driver.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Table(name="Cards")
+@Builder
 public class Card {
 
     @Id

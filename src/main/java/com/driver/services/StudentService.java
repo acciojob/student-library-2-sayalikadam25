@@ -38,8 +38,11 @@ public class StudentService {
     }
 
     public void deleteStudent(int id){
-        Student student=studentRepository4.findById(id).get();
-        student.getCard().setCardStatus(CardStatus.DEACTIVATED);
-        studentRepository4.deleteById(id);
+        if(studentRepository4.existsById(id)){
+            Student student=studentRepository4.findById(id).get();
+
+            student.getCard().setCardStatus(CardStatus.DEACTIVATED);
+            studentRepository4.deleteById(id);
+        }
     }
 }
