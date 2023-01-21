@@ -20,12 +20,14 @@ public class BookService {
     private AuthorRepository authorRepository;
 
     public void createBook(Book book){
-        int authorId=book.getAuthor().getId();
-        Author author=authorRepository.findById(authorId).get();
-        author.getBooksWritten().add(book);
-        book.setAuthor(author);
-        bookRepository2.save(book);
-        authorRepository.save(author);
+        if(!bookRepository2.existsById(book.getId())){
+            int authorId=book.getAuthor().getId();
+            Author author=authorRepository.findById(authorId).get();
+            author.getBooksWritten().add(book);
+            book.setAuthor(author);
+            bookRepository2.save(book);
+            authorRepository.save(author);
+        }
     }
 
     public List<Book> getBooks(String genre, boolean available, String author){
