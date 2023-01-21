@@ -22,29 +22,34 @@ public class BookService {
     public void createBook(Book book){
         if(!bookRepository2.existsById(book.getId())){
             int authorId=book.getAuthor().getId();
-            Author author=authorRepository.findById(authorId).get();
-            author.getBooksWritten().add(book);
-            book.setAuthor(author);
+            if(authorRepository.existsById(authorId)){
+                Author author=authorRepository.findById(authorId).get();
+                author.getBooksWritten().add(book);
+                book.setAuthor(author);
+            }
+            else{
+                authorRepository.save(book.getAuthor());
+            }
             bookRepository2.save(book);
-            authorRepository.save(author);
+
         }
     }
 
     public List<Book> getBooks(String genre, boolean available, String author){
         List<Book> books;
-        if(genre!=null && author!=null){
+        if(!StringUtils.isBlank(genre) && !StringUtils.isBlank(author)){
             books=bookRepository2.findBooksByGenreAuthor(genre,author,available);
             if(books==null)
                 return new ArrayList<>();
             return books;
         }
-        else if(genre!=null){
+        else if(StringUtils.isBlank(author)){
             books=bookRepository2.findBooksByGenre(genre,available);
             if(books==null)
                 return new ArrayList<>();
             return books;
         }
-        else if(author!=null){
+        else if(StringUtils.isBlank(genre)){
             books=bookRepository2.findBooksByAuthor(author,available);
             if(books==null)
                 return new ArrayList<>();
