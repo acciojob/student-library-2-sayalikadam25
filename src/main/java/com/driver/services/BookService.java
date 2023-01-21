@@ -29,30 +29,18 @@ public class BookService {
     }
 
     public List<Book> getBooks(String genre, boolean available, String author){
-        if(!StringUtils.isBlank(genre) && !StringUtils.isBlank(author)){
+        if(genre!=null && author!=null){
             return bookRepository2.findBooksByGenreAuthor(genre,author,available);
         }
-        else if(!StringUtils.isBlank(genre)){
+        else if(genre!=null){
             return bookRepository2.findBooksByGenre(genre,available);
         }
-        else if(!StringUtils.isBlank(author)){
+        else if(author!=null){
             return bookRepository2.findBooksByAuthor(author,available);
         }
         else{
             return bookRepository2.findByAvailability(available);
         }
     }
-//    public List<Book> getBooksWhenNoInputNull(String genre,boolean available,String author){
-//        return bookRepository2.findBooksByGenreAuthor(genre,author,available);
-//    }
-//    public List<Book> getBooksWhenAuthorNull(String genre,boolean available){
-//        return bookRepository2.findBooksByGenre(genre,available);
-//    }
-//    public List<Book> getBooksWhenGenreNull(String author,boolean available){
-//        return bookRepository2.findBooksByAuthor(author,available);
-//    }
-//    public List<Book> getBooksWhenNotAvailable(boolean available){
-//        return bookRepository2.findByAvailability(available);
-//    }
 
 }
