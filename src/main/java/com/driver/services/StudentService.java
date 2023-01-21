@@ -26,12 +26,11 @@ public class StudentService {
     }
 
     public void createStudent(Student student){
-        studentRepository4.save(student);
+        Card newCard=cardService4.createAndReturn(student);
     }
 
     public void updateStudent(Student student){
-        Card newCard=cardService4.createAndReturn(student);
-        studentRepository4.save(student);
+        studentRepository4.updateStudentDetails(student);
     }
 
     public void deleteStudent(int id){
