@@ -18,30 +18,25 @@ public class StudentService {
     StudentRepository studentRepository4;
 
     public Student getDetailsByEmail(String email){
-        Student student = studentRepository4.findByEmailId(email);
-        return student;
+        return studentRepository4.findByEmailId(email);
     }
 
     public Student getDetailsById(int id){
-        Student student = studentRepository4.findById(id).get();
-        return student;
+        return studentRepository4.findById(id).get();
     }
 
     public void createStudent(Student student){
-
         studentRepository4.save(student);
     }
 
     public void updateStudent(Student student){
-
+        Card newCard=cardService4.createAndReturn(student);
         studentRepository4.save(student);
     }
 
     public void deleteStudent(int id){
         if(studentRepository4.existsById(id)){
-            Student student=studentRepository4.findById(id).get();
-
-            student.getCard().setCardStatus(CardStatus.DEACTIVATED);
+            cardService4.deactivateCard(id);
             studentRepository4.deleteById(id);
         }
     }
