@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,7 +26,7 @@ public class Author {
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("author")
-    private List<Book> booksWritten;
+    private List<Book> booksWritten=new ArrayList<>();
 
     public Author() {
     }
