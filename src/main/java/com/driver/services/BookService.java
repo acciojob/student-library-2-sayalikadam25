@@ -22,15 +22,13 @@ public class BookService {
 
     public void createBook(@NonNull Book book){
         if(!bookRepository2.existsById(book.getId())){
-            int authorId=book.getAuthor().getId();
-            if(authorId<Integer.MAX_VALUE && authorRepository.existsById(authorId)){
-                Author author=authorRepository.findById(authorId).get();
-                author.getBooksWritten().add(book);
-                book.setAuthor(author);
+            Author author=book.getAuthor();
+            if(!authorRepository.equals(author)){
+                authorRepository.save(author);
             }
-            else{
-                authorRepository.save(book.getAuthor());
-            }
+            author.getBooksWritten().add(book);
+            book.setAuthor(author);
+            authorRepository.save(author);
             bookRepository2.save(book);
 
         }
