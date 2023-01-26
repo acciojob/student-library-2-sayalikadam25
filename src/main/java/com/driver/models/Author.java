@@ -1,15 +1,13 @@
 package com.driver.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
 import javax.persistence.*;
-import java.util.ArrayList;
+
 import java.util.List;
 
 @Entity
-@Table(name="Author")
+@Table
+
 public class Author {
 
     @Id
@@ -25,7 +23,7 @@ public class Author {
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("author")
-    private List<Book> booksWritten=new ArrayList<>();
+    private List<Book> booksWritten;
 
     public Author() {
     }
@@ -35,6 +33,15 @@ public class Author {
         this.email = email;
         this.age = age;
         this.country = country;
+    }
+
+    public Author(int id, String name, String email, int age, String country, List<Book> booksWritten) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.age = age;
+        this.country = country;
+        this.booksWritten = booksWritten;
     }
 
     public int getId() {
@@ -85,4 +92,3 @@ public class Author {
         this.booksWritten = booksWritten;
     }
 }
-

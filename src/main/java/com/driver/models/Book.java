@@ -2,14 +2,11 @@ package com.driver.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="Book")
 public class Book {
 
     @Id
@@ -37,7 +34,7 @@ public class Book {
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("book")
-    private List<Transaction> transactions=new ArrayList<>();
+    private List<Transaction> transactions;
 
     public Book() {
     }
@@ -46,6 +43,7 @@ public class Book {
         this.name = name;
         this.genre = genre;
         this.author = author;
+        this.available = true;
     }
 
     public int getId() {
@@ -104,5 +102,3 @@ public class Book {
         this.transactions = transactions;
     }
 }
-
-
