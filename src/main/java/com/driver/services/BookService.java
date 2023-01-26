@@ -20,7 +20,7 @@ public class BookService {
     @Autowired
     private AuthorRepository authorRepository;
 
-    public void createBook(@NonNull Book book){
+    public void createBook(Book book){
         if(!bookRepository2.existsById(book.getId())){
             Author author=book.getAuthor();
             if(!authorRepository.findAll().contains(author)){
