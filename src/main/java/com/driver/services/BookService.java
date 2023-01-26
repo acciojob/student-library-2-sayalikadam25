@@ -40,10 +40,10 @@ public class BookService {
         if(!StringUtils.isBlank(genre) && !StringUtils.isBlank(author)){
             return bookRepository2.findBooksByGenreAuthor(genre,author,available);
         }
-        else if(StringUtils.isBlank(author) && !StringUtils.isBlank(genre)){
+        else if(!StringUtils.isBlank(genre)){
             return bookRepository2.findBooksByGenre(genre,available);
         }
-        else if(StringUtils.isBlank(genre) && !StringUtils.isBlank(author)){
+        else if(!StringUtils.isBlank(author)){
             return bookRepository2.findBooksByAuthor(author,available);
         }
         else{
