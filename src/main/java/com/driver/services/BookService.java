@@ -37,18 +37,30 @@ public class BookService {
     }
 
     public List<Book> getBooks(String genre, boolean available, String author){
-//        List<Book> books=new ArrayList<>();
+        List<Book> books=new ArrayList<>();
         if(!StringUtils.isBlank(genre) && !StringUtils.isBlank(author)){
-            return bookRepository2.findBooksByGenreAuthor(genre,author,available);
+            books=bookRepository2.findBooksByGenreAuthor(genre,author,available);
+            if(books==null)
+                return new ArrayList<>();
+            return books;
         }
         else if(!StringUtils.isBlank(genre)){
-            return bookRepository2.findBooksByGenre(genre,available);
+            books=bookRepository2.findBooksByGenre(genre,available);
+            if(books==null)
+                return new ArrayList<>();
+            return books;
         }
         else if(!StringUtils.isBlank(author)){
-            return bookRepository2.findBooksByAuthor(author,available);
+            books=bookRepository2.findBooksByAuthor(author,available);
+            if(books==null)
+                return new ArrayList<>();
+            return books;
         }
         else{
-            return bookRepository2.findByAvailability(available);
+            books=bookRepository2.findByAvailability(available);
+            if(books==null)
+                return new ArrayList<>();
+            return books;
         }
     }
 
