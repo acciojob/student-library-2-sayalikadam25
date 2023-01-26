@@ -23,7 +23,7 @@ public class BookService {
     public void createBook(@NonNull Book book){
         if(!bookRepository2.existsById(book.getId())){
             Author author=book.getAuthor();
-            if(!authorRepository.equals(author)){
+            if(!authorRepository.findAll().contains(author)){
                 authorRepository.save(author);
             }
             author.getBooksWritten().add(book);
