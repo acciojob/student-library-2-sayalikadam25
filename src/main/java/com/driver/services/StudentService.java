@@ -34,9 +34,9 @@ public class StudentService {
     }
 
     public void deleteStudent(int id){
-        if(studentRepository4.existsById(id)){
-            cardService4.deactivateCard(id);
-            studentRepository4.deleteById(id);
-        }
+
+        studentRepository4.deleteCustom(id);
+        cardService4.deactivateCard(id);
+
     }
 }
