@@ -23,7 +23,7 @@ public class BookController {
         return new ResponseEntity<>("The book is added successfully",HttpStatus.CREATED);
     }
 
-    @PostMapping("/")
+    @GetMapping("/")
     public ResponseEntity getBooks(@RequestParam(value = "genre", required = false) String genre,
                                    @RequestParam(value = "available", required = false, defaultValue = "false") boolean available,
                                    @RequestParam(value = "author", required = false) String author){
